@@ -80,13 +80,16 @@ h1{
 h2{
   margin-bottom: 8px;
   font-weight: 400; font-size: 24px; line-height: 26px;
-  font:  24px/24px;
 }
 
 h3{
   margin-bottom: 8px;
   font-weight: 700; font-size: 16px; line-height: 18px;
-  font:  12px/18px;
+}
+
+h4{
+  margin-bottom: 8px;
+  font-weight: 700; font-size: 14px; line-height: 18px;
 }
 
 a{
@@ -146,10 +149,18 @@ button{
 /* ---------------------------- Custom Elements ---------------------------- */ 
 
 .card{
-  box-shadow: var(--shadow); border-radius: 8px; padding: 24px;
+  box-shadow: var(--shadow); border-radius: 8px; padding: 24px 24px 8px 24px;
   background-color: white;
   text-align: center; overflow-wrap: break-word;    
+  position: relative;
 }
+
+  .card > div.close {
+    position: absolute; top: 10px; right: 8px; width: 14px; height: 14px;
+    border-radius: 14px; 
+    background-color: var(--bodyColor-light);
+    display: grid; align-content: center; justify-content: center;
+  }
 
 .divider{
   width: 100%; height: 4px;
