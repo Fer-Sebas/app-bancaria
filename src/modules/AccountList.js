@@ -1,4 +1,4 @@
-import AccountCard from "./Card.Account"
+import { AccountCard } from "./Cards"
 
 function AccountList ({accounts}) {
     return (

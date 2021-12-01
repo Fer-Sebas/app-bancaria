@@ -1,5 +1,5 @@
 
-import ButtonAccount from './Button.Account'
+import { ButtonAccount } from './Buttons'
 import Logo from './Logo'
 
 function DashboardHeader({user}) {

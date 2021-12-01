@@ -74,8 +74,16 @@ body{
 header.dashboard{
   display: grid; grid-template-columns: 70px auto 27px;
   text-align: left;
-  color: white;
+  color: var(--bodyColor-full);
   margin-bottom: 16px;
+}
+
+header.dashboard h4{ color: var(--mainColor); }
+
+header.dashboard :nth-child(3) path{ fill: var(--bodyColor-light); }
+
+body.red header.dashboard{
+  color: white;
 }
 
 header.dashboard h4{
@@ -151,6 +159,15 @@ button{
 
   button.alt{ background-color: var(--altColor); }
 
+  button.icon{
+    margin: 0 auto; border-radius: 0; padding: 0; height: 16px;
+    background-color: transparent;
+  }
+
+    button.icon path{
+      fill: var(--bodyColor-light);
+    }
+
   button.fab{
     display: grid; align-content: center; justify-content: center;
     position: fixed; bottom: 35px; right: 35px; 
@@ -218,8 +235,45 @@ body.red .logo path { fill: white }
     margin-bottom: 0;
   }
 
+  .card.menu{
+    text-align: left;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: auto 34px;
+  }
+
+    .card.menu h2 {
+      margin: 0;
+    }
+
+.tile{
+  margin-bottom: 8px; border: solid 1px var(--bodyColor-lighter); border-radius: 4px; padding: 16px;
+  background-color: var(--bodyColor-lighter);
+  text-align: left;
+}
+
+  .tile button.icon {
+    transition:  var(--animation-time);
+    opacity: 0;
+  }
+
+  .tile:hover button.icon {
+    transition: var(--animation-time);
+    opacity: 1;
+  }
+
+.tile.inline{
+  display: grid; grid-template-columns: auto 62px 24px;
+  padding: 16px 24px;
+}
+
+  .tile.inline p{
+    margin-bottom: 0;
+  }
+
 .divider{
   width: 100%; height: 4px;
   margin-bottom: 16px; border-radius: 2px;
   background-color: var(--bodyColor-lighter);
 }
+

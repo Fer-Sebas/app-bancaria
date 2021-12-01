@@ -1,4 +1,4 @@
-import Card from './Card'
+import { Card } from './Cards'
 import ReportTransacctionForm from './ReportTransacction.Form'
 
 function ReportTransacction() {

@@ -1,8 +1,12 @@
 import DashboardHeader from "./Dashboard.Header";
 import AccountList from "./AccountList";
-import Card from "./Card";
+import { Card } from "./Cards";
 
 document.body.classList.add('red');
+
+function openRequests() {
+    
+}
 
 function Dashboard({user}) {
 
@@ -26,7 +30,7 @@ function Dashboard({user}) {
         return (
             <>
                 <DashboardHeader user={user} />
-                <Card>
+                <Card onClick={openRequests}>
                     <h2>Solicitudes</h2>
                 </Card>
                 <Card>
