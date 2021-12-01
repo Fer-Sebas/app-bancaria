@@ -60,6 +60,7 @@ body{
   min-height: 100vh;
   padding: 32px;
   text-rendering: optimizeSpeed;
+  text-align: center;
 }
 
   body.red{
@@ -69,6 +70,17 @@ body{
     body.red > h1 {
       color: white;
     }
+
+header.dashboard{
+  display: grid; grid-template-columns: 70px auto 27px;
+  text-align: left;
+  color: white;
+  margin-bottom: 16px;
+}
+
+header.dashboard h4{
+  margin-bottom: 0;
+}
 
 /* ---------------------------- Text Elements ---------------------------- */
 
@@ -137,19 +149,41 @@ button{
 
   button.main{ background-color: var(--mainColor); }
 
+  button.alt{ background-color: var(--altColor); }
+
   button.fab{
+    display: grid; align-content: center; justify-content: center;
     position: fixed; bottom: 35px; right: 35px; 
-    box-shadow: var(--shadow); border-radius: 56px; width: 56px; height: 56px; 
+    margin-bottom: 0; box-shadow: var(--shadow); border-radius: 56px; width: 56px; height: 56px; 
     background-color: white;
     color: var(--bodyColor-full);
   }
       
     button.fab:hover{ filter: brightness(0.93); } 
 
+.fieldGroup{
+  text-align: left;
+}
+
 /* ---------------------------- Custom Elements ---------------------------- */ 
 
+.logo{
+  width: 35px; height: 24px;
+  margin-bottom: 8px;
+}
+
+.logo path { fill: var(--mainColor) }
+
+body.red .logo path { fill: white }
+
+.dashboard .logo{
+  width: 47px; height: 32px;
+  margin-bottom: 0;
+}
+
+
 .card{
-  box-shadow: var(--shadow); border-radius: 8px; padding: 24px 24px 8px 24px;
+  margin-bottom: 16px; box-shadow: var(--shadow); border-radius: 8px; padding: 24px 24px 8px 24px;
   background-color: white;
   text-align: center; overflow-wrap: break-word;    
   position: relative;
@@ -160,6 +194,28 @@ button{
     border-radius: 14px; 
     background-color: var(--bodyColor-light);
     display: grid; align-content: center; justify-content: center;
+  }
+
+  .card.account {
+    margin-bottom: 16px; padding: 16px;
+    text-align: left;
+  }
+  
+  .card.account > .divider{
+    height: 2px;
+    margin-bottom: 8px;
+  }
+
+  .card.account :nth-child(4) {
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+
+  .card.account :nth-child(4) :nth-child(2) {
+    justify-self: right;
+  }
+  
+  .card.account :nth-child(4) > h4 {
+    margin-bottom: 0;
   }
 
 .divider{

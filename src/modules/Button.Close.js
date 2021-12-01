@@ -1,6 +1,6 @@
 import iconClose from '../img/iconClose.svg'
 
-function Close() {
+function ButtonClose() {
     return(
         <div className="close">
             <img src={iconClose} alt="Close card" />
@@ -8,4 +8,4 @@ function Close() {
     )
 }
 
-export default Close
+export default ButtonClose
