@@ -1,37 +1,49 @@
-import Dashboard from "./modules/Dashboard";
+import Header from './modules/Header'
+import AccountList from './modules/AccountList'
+import { Card } from './modules/Cards'
+import SendMoney from './modules/SendMoney'
+import { useEffect, useState } from 'react'
+import { ButtonFab } from './modules/Buttons'
+import axios from 'axios'
 
 
-function App() {
+const getUserData = async () => {
+  return axios.get('http://localhost:5000/users/61a828ab37a98998529a90a0')
+  .then(({data}) => { console.log(data); return data })
+  .catch(err => { console.error(err) })
+}
 
-  const user = {
-    username: "Fer Sebas",
-    birthDate: '1998-10-17T00:00:00.000+00:00',
-    email: 'heyferrius@mail.com',
-    adress: 'Carrera 35 # 84 - 215',
-    idDoc: {
-      type: 'CC',
-      number: 1234093255,
-      expDate: '2001-01-01T00:00:00.000+00:00'
-    },
-    userType: 1,
-    accounts: [
-      {
-        type: 'Cuenta de Ahorros',
-        number: 619525094,
-        balance: 6034000
-      },
-      {
-        type: 'Cuenta Corriente',
-        number: 490525916,
-        balance: 15000000
-      }
-    ]
-  }
+document.body.classList.add('red')
 
-  return (
-    <Dashboard user={user} />
-  );
+function App() { 
 
+  const [userData, setUserData] = useState('')
+
+  useEffect(() => {
+    getUserData().then(user => {
+      setUserData(user)
+    })
+  }, [])
+
+    return (
+      <>
+        <Header user={userData} />
+
+        {userData.role === 'USER' &&
+          <ButtonFab />
+        }
+
+        {userData.role === 'ADMIN' &&
+          <p>Admin</p>
+        }
+
+        {userData.role === 'SUPERADMIN' &&
+          <p>Super Admin</p>
+        }
+        
+      </>
+    )
+   
 }
 
 export default App;

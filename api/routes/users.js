@@ -18,18 +18,15 @@ router.route('/:id/account').get( getUser, (req, res) => { res.send(res.user.acc
 router.route('/').post((req,res) => {
 
     // Recolección de datos
-    const username = {
-        first: req.body.firstName,
-        last: req.body.lastName
-    }
-    const birthDate = req.body.birthDate;
+    const username = req.body.username
+    const birthDate = req.body.birthDate
     const email = req.body.email;
     const address = req.body.address;
     const idDoc = {
         type: req.body.idType,
         number: req.body.idNumber,
         expDate: req.body.expDate
-    }
+    };
     const userType = 1;
     const password = req.body.password;
 

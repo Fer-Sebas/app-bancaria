@@ -73,7 +73,7 @@ body{
 
 header.dashboard{
   display: grid; grid-template-columns: 70px auto 27px;
-  text-align: left;
+  text-align: left; text-transform: capitalize;
   color: var(--bodyColor-full);
   margin-bottom: 16px;
 }
@@ -82,9 +82,7 @@ header.dashboard h4{ color: var(--mainColor); }
 
 header.dashboard :nth-child(3) path{ fill: var(--bodyColor-light); }
 
-body.red header.dashboard{
-  color: white;
-}
+body.red header.dashboard * { color: white; }
 
 header.dashboard h4{
   margin-bottom: 0;
@@ -245,6 +243,17 @@ body.red .logo path { fill: white }
     .card.menu h2 {
       margin: 0;
     }
+
+  .modalOverlay{
+    position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px;
+    background-color: var(--bodyColor-light);
+  }
+
+  .card.modal{
+
+  }
 
 .tile{
   margin-bottom: 8px; border: solid 1px var(--bodyColor-lighter); border-radius: 4px; padding: 16px;

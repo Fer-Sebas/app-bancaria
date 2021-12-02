@@ -24,21 +24,29 @@ function AccountCard ({account}) {
     )
 }
 
-function ModalCard(props) {
+const ModalCard = (props) => {
+
+    if (!props.show === true) {
+        return null
+    }
    
     return (
-        <div className="card">
-            <ButtonClose />
-            {props.title != null && 
-                <h3>{props.title}</h3>
-            } 
-            {props.body != null && 
-                <p>{props.body}</p>
-            }
-            {props.children}
-            {props.altText != null && <p className="altText">{props.altText}</p> }
+        <div className="modalOverlay">
+            <div className="card modal">
+                <ButtonClose onClick={props.onClose} />
+                {props.title != null && 
+                    <h3>{props.title}</h3>
+                } 
+                {props.body != null && 
+                    <p>{props.body}</p>
+                }
+                {props.children}
+                {props.altText != null && <p className="altText">{props.altText}</p> }
+            </div>
         </div>
     )
+    
 }
+
 
 export {Card, AccountCard, ModalCard}

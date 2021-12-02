@@ -5,10 +5,7 @@ const Schema = mongoose.Schema;
 // Instanciación objeto Usuario
 const userSchema = new Schema (
     {
-        username: { 
-            first: {type: String, required: true, trim: true, minlenght: 3},
-            last: {type: String, required: true, trim: true, minlenght: 3},
-        },
+        username: { type: String, required: true, trim: true, minlenght: 3 },
         birthDate: { type: Date, required: true },
         email: { type: String, required: true },
         userType: { type: Number, required: true },
