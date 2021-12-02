@@ -1,5 +1,7 @@
 import SignInForm from './SignIn.Form';
 
+document.body.classList.remove('red')
+
 function SignIn() {
 
   return (

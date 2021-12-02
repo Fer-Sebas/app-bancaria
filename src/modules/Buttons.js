@@ -54,5 +54,11 @@ const ButtonFab = () => {
 
 }
 
+const ButtonRequestAccount = () => {
+    return (
+        <button>SOLICITAR CUENTA</button>
+    )
+}
 
-export {ButtonClose, ButtonAccount, ButtonDelete, ButtonComfirm, ButtonFab}
+
+export {ButtonClose, ButtonAccount, ButtonDelete, ButtonComfirm, ButtonFab, ButtonRequestAccount}

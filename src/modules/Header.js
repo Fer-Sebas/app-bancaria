@@ -1,15 +1,15 @@
 import { ButtonAccount } from './Buttons'
 import Logo from './Logo'
 
-function DashboardHeader({user}) {
+function DashboardHeader({userData}) {
     return (
         <header className="dashboard">
             <Logo />
             <div>
-                <h4>Hola {user.username}</h4>                
-                {user.role === 'USER' && <p>Usuario</p> }
-                {user.role === 'ADMIN' && <p>Funcionario</p> }
-                {user.role === 'SUPERADMIN' && <p>Administrador</p> }                    
+                <h4>Hola {userData.username}</h4>                
+                {userData.role === 'USER' && <p>Usuario</p> }
+                {userData.role === 'ADMIN' && <p>Funcionario</p> }
+                {userData.role === 'SUPERADMIN' && <p>Administrador</p> }                    
             </div>
             <ButtonAccount />
         </header>

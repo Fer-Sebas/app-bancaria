@@ -1,24 +1,36 @@
 import Divider from './Divider'
 import { ButtonClose } from './Buttons'
-var formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0,});
+
+const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0,});
+
+function formatAccountNumber(n) {
+    return n.toString().match(/.{1,3}/g).join(' ')
+}
 
 function Card(props) {
     return (
-        <div className="card menu">
+        <div className="card">
             {props.children}
         </div>
     )
 }
 
 function AccountCard ({account}) {
+
+    const getAccountType = () => {
+        if(account.type  === 'ahorros') { return 'Cuenta de Ahorros' }
+        else if (account.type  === 'corriente') { return 'Cuenta Corriente' }
+    }
+
+
     return (
         <div className="card account">
-            <h2>{account.type}</h2>
-            <h1>{account.number}</h1>
+            <h2>{getAccountType()}</h2>
+            <h1>{formatAccountNumber(account._id)}</h1>
             <Divider />
             <div>
                 <h4>Balance</h4>
-                <h4>{formatter.format(account.balance)}</h4>
+                <h4>{currencyFormatter.format(account.balance)}</h4>
             </div>
         </div>
     )

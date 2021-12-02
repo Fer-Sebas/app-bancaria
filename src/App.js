@@ -1,15 +1,15 @@
 import Header from './modules/Header'
-import AccountList from './modules/AccountList'
-import { Card } from './modules/Cards'
-import SendMoney from './modules/SendMoney'
+import Dashboard from './modules/Dashboard'
+import SignIn from './modules/SignIn'
 import { useEffect, useState } from 'react'
-import { ButtonFab } from './modules/Buttons'
 import axios from 'axios'
 
+const u1 = '61a92f8efc38d1746d343257'
+const u2 ='61a828ab37a98998529a90a0'
 
 const getUserData = async () => {
-  return axios.get('http://localhost:5000/users/61a828ab37a98998529a90a0')
-  .then(({data}) => { console.log(data); return data })
+  return axios.get('http://localhost:5000/users/'+ u2)
+  .then(({data}) => { console.log('User logged in: ' + data.username); return data })
   .catch(err => { console.error(err) })
 }
 
@@ -25,24 +25,23 @@ function App() {
     })
   }, [])
 
+  if (userData) {
     return (
       <>
-        <Header user={userData} />
-
-        {userData.role === 'USER' &&
-          <ButtonFab />
-        }
-
-        {userData.role === 'ADMIN' &&
-          <p>Admin</p>
-        }
-
-        {userData.role === 'SUPERADMIN' &&
-          <p>Super Admin</p>
-        }
-        
+        <Header userData={userData} />
+        <Dashboard userData={userData} />
       </>
     )
+  } 
+  
+  else {
+
+    return (
+      <SignIn />
+    );
+
+  }
+      
    
 }
 

@@ -200,7 +200,7 @@ body.red .logo path { fill: white }
 .card{
   margin-bottom: 16px; box-shadow: var(--shadow); border-radius: 8px; padding: 24px 24px 8px 24px;
   background-color: white;
-  text-align: center; overflow-wrap: break-word;    
+  text-align: left; overflow-wrap: break-word;    
   position: relative;
 }
 
@@ -252,7 +252,7 @@ body.red .logo path { fill: white }
   }
 
   .card.modal{
-
+    text-align: center;
   }
 
 .tile{
