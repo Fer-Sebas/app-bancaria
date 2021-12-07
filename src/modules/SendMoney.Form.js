@@ -5,12 +5,12 @@ function SendMoneyForm() {
       <form name="SendMoneyForm" id="SendMoneyForm">
           
           <div className="fieldGroup">
-            <label for="accountNumber">Numero de cuenta</label>
+            <label htmlFor="accountNumber">Numero de cuenta</label>
             <input type="number" title="accountNumber" />
           </div>
   
           <div className="fieldGroup">
-            <label for="moneyAmount">Monto a enviar</label>
+            <label htmlFor="moneyAmount">Monto a enviar</label>
             <input type="number" title="moneyAmount" />
           </div>
           

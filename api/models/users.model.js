@@ -5,17 +5,14 @@ const Schema = mongoose.Schema;
 // Instanciación objeto Usuario
 const userSchema = new Schema (
     {
+        _id: { type: Number },
         username: { type: String, required: true, trim: true, minlenght: 3 },
         birthDate: { type: Date, required: true },
         email: { type: String, required: true },
         userType: { type: Number, required: true },
         address: { type: String, required: true },
-        idDoc: {
-            type: { type: Number, required: true },
-            number: { type: Number, required: true, minlenght: 8 },
-            expDate: { type: Date, required: true }
-        },
-        accounts: { type: Array }
+        accounts: { type: Array },
+        userType: { type: String }
     }, 
     {
         timestamps: true,

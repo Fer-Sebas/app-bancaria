@@ -1,14 +1,4 @@
-import { useState } from 'react'
-import iconClose from '../img/iconClose.svg'
-
-
-function ButtonClose() {
-    return(
-        <div className="close">
-            <img src={iconClose} alt="Close card" />
-        </div>
-    )
-}
+import React from 'react'
 
 function ButtonAccount() {
     return(
@@ -18,47 +8,22 @@ function ButtonAccount() {
     )
 }
 
-function ButtonDelete(){
-    return (
-        <button className="icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.6451 0.367067C15.4183 0.139835 15.1105 0.012135 14.7895 0.012135C14.4685 0.012135 14.1607 0.139835 13.934 0.367067L8 6.28895L2.06598 0.354932C1.83926 0.1277 1.53146 0 1.21047 0C0.889474 0 0.581669 0.1277 0.354949 0.354932C-0.118316 0.828197 -0.118316 1.5927 0.354949 2.06597L6.28896 7.99999L0.354949 13.934C-0.118316 14.4073 -0.118316 15.1718 0.354949 15.6451C0.828214 16.1183 1.59272 16.1183 2.06598 15.6451L8 9.71103L13.934 15.6451C14.4073 16.1183 15.1718 16.1183 15.6451 15.6451C16.1183 15.1718 16.1183 14.4073 15.6451 13.934L9.71103 7.99999L15.6451 2.06597C16.1062 1.60484 16.1062 0.828197 15.6451 0.367067Z" fill="black" fill-opacity="0.54"/>
-            </svg>
-        </button>
-    )
+class Button extends React.Component {
+    render () { return <button onClick={this.props.onClick}>{this.props.label}</button> }
 }
 
-function ButtonComfirm (){
-    return (
-        <button className="icon">
-            <svg width="22" height="16" viewBox="0 0 22 16"  xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.7917 12.9304L2.23545 8.5153C1.99013 8.27705 1.65708 8.14315 1.30976 8.14315C0.962436 8.14315 0.629382 8.27705 0.384064 8.5153C-0.128021 9.01152 -0.128021 9.81311 0.384064 10.3093L5.87258 15.6278C6.38466 16.1241 7.21188 16.1241 7.72396 15.6278L21.6159 2.16619C22.128 1.66996 22.128 0.868372 21.6159 0.372149C21.3706 0.133895 21.0376 0 20.6902 0C20.3429 0 20.0099 0.133895 19.7645 0.372149L6.7917 12.9304Z" fill="black" fill-opacity="0.54"/>
-            </svg>
-        </button>
-    )
+class ButtonNavbar extends React.Component {
+    render() { return <li onClick={this.props.navTo}>{this.props.label}</li> }
 }
 
-
-const ButtonFab = () => {
-
-    const [setShow] = useState(false)
-
-    return(
-        <button className="fab" onClick={() => setShow(true) }>
-            <svg width="33" height="20" viewBox="0 0 33 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M32 9.16743L26.0648 4.46629C25.4184 3.93741 24.4781 4.40753 24.4781 5.23023V7.63956H21.3012C21.4775 8.4035 21.8012 9.25267 21.8012 10.0166C21.8012 10.7805 21.4775 11.4592 21.3012 12.2232H24.4781V14.6325C24.4781 15.4552 25.4184 15.9253 26.0648 15.3965L32 10.6953C32.4701 10.284 32.4701 9.57878 32 9.16743Z" fill="black"/>
-                <path d="M9.93117 19.8623C15.455 19.8623 19.8623 15.3963 19.8623 9.93117C19.8623 4.40732 15.3963 0 9.93117 0C4.40733 0 0 4.46609 0 9.93117C0 15.455 4.46609 19.8623 9.93117 19.8623ZM10.6951 10.8126H9.226C7.5806 10.8126 6.22902 9.46106 6.22902 7.81565C6.22902 6.22902 7.52183 4.9362 9.10847 4.87744V3.11451H10.8126V4.87744C12.3993 4.9362 13.6921 6.22902 13.6921 7.81565H11.9879C11.9879 7.11048 11.4003 6.5816 10.7539 6.5816H9.28476C8.57959 6.5816 8.05071 7.16925 8.05071 7.81565C8.05071 8.52083 8.63836 9.0497 9.28476 9.0497H10.7539C12.3993 9.0497 13.7509 10.4013 13.7509 12.0467C13.7509 13.6333 12.458 14.9261 10.8714 14.9849V16.7478H9.16724V14.9849C7.5806 14.9261 6.28778 13.6333 6.28778 12.0467H7.99195C7.99195 12.7519 8.57959 13.2807 9.226 13.2807H10.6951C11.4003 13.2807 11.9292 12.6931 11.9292 12.0467C11.9292 11.3415 11.4003 10.8126 10.6951 10.8126Z" fill="black"/>
-            </svg>
-        </button>
-    )
-
+class ButtonIcon extends React.Component {
+    render() {
+        return (
+            <button className="icon" onClick={this.props.handle}>
+                {this.props.children}
+            </button>
+        )
+    }
 }
 
-const ButtonRequestAccount = () => {
-    return (
-        <button>SOLICITAR CUENTA</button>
-    )
-}
-
-
-export {ButtonClose, ButtonAccount, ButtonDelete, ButtonComfirm, ButtonFab, ButtonRequestAccount}
+export { ButtonAccount, ButtonNavbar, Button, ButtonIcon }

@@ -1,32 +1,29 @@
 import Divider from './Divider'
-import { ButtonClose } from './Buttons'
 
-const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0,});
-
-function formatAccountNumber(n) {
+const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0,})
+const formatAccountNumber = (n) => { 
     return n.toString().match(/.{1,3}/g).join(' ')
 }
 
 function Card(props) {
     return (
-        <div className="card">
+        <div className={"card " + props.className}>
+            {props.title != null && 
+                <h3>{props.title}</h3>
+            } 
+            {props.body != null && 
+                <p>{props.body}</p>
+            }
             {props.children}
         </div>
     )
 }
 
 function AccountCard ({account}) {
-
-    const getAccountType = () => {
-        if(account.type  === 'ahorros') { return 'Cuenta de Ahorros' }
-        else if (account.type  === 'corriente') { return 'Cuenta Corriente' }
-    }
-
-
     return (
         <div className="card account">
-            <h2>{getAccountType()}</h2>
-            <h1>{formatAccountNumber(account._id)}</h1>
+            <h2>Cuenta de Ahorros</h2>
+            <h1>{formatAccountNumber(account.number)}</h1>
             <Divider />
             <div>
                 <h4>Balance</h4>
@@ -36,29 +33,19 @@ function AccountCard ({account}) {
     )
 }
 
-const ModalCard = (props) => {
-
-    if (!props.show === true) {
-        return null
-    }
-   
+const DialogCard = (props) => {
     return (
-        <div className="modalOverlay">
-            <div className="card modal">
-                <ButtonClose onClick={props.onClose} />
-                {props.title != null && 
-                    <h3>{props.title}</h3>
-                } 
-                {props.body != null && 
-                    <p>{props.body}</p>
-                }
-                {props.children}
-                {props.altText != null && <p className="altText">{props.altText}</p> }
-            </div>
+        <div className="card dialog">
+            {props.title != null && 
+                <h3>{props.title}</h3>
+            } 
+            {props.body != null && 
+                <p>{props.body}</p>
+            }
+            {props.children}
+            {props.altText != null && <p className="altText">{props.altText}</p> }
         </div>
-    )
-    
+    ) 
 }
 
-
-export {Card, AccountCard, ModalCard}
+export {Card, AccountCard, DialogCard}

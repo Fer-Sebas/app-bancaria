@@ -4,17 +4,13 @@ const Schema = mongoose.Schema;
 
 // Instanciación objeto Cuenta
 const accountScheme = new Schema (
-    {
-        accountType: { type: Number, required: true },
-        accountNumber: { type: Number, required: true},
-        accountBalance: { type: Number, default: 0}
-    },
-    {
-        timestamps: true,
+    {   _id : { type: Schema.Types.ObjectId },    
+        number: { type: Number, unique: true, required: true },
+        owner: { type: Number },
+        balance: { type: Number, default: 0 },
+        status: { type: String, default: "PENDING" }
     }
 );
 
 // Relacionar objeto Usuario con DB
-const Account = mongoose.model('Account', accountScheme);
-
-module.exports = Account;
+module.exports = mongoose.model('Account', accountScheme);
