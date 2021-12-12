@@ -7,20 +7,23 @@ const app = express();
 const port = 5000;
 
 const usersRouter = require('./routes/users');
-const transactionRouter = require('./routes/transaction');
+const transactionRouter = require('./routes/transactions');
+const accountsRouter = require('./routes/accounts');
 
 // Middleware   
 app.use(express.json());
 app.use(express.static('public'));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
 // Rutas
 app.use('/users', usersRouter);
-app.use('/transaction', transactionRouter);
+app.use('/transactions', transactionRouter);
+app.use('/accounts', accountsRouter);
 
 mongoose.connect(process.env.ATLAS_URI, {useNewUrlParser: true});
 const db = mongoose.connection;

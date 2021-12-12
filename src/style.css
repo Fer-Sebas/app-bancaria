@@ -7,15 +7,15 @@
   
   --animation-time: all .2s ease-in-out; 
 
-  --shadow: 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 8px 8px rgba(0, 0, 0, 0.24);
+  --shadow: 0px 20px 30px rgba(0, 0, 0, 0.2);
+  --shadowPlus: 0px 22px 70px 4px rgba(0, 0, 0, 0.56);
   
-  --mainColor: hsl(5, 80%, 53%, 100%); --mainColor-lighter: hsl(5, 80%, 65%, 100%); --altColor: hsl(5, 72%, 60%, 100%);
-  --bodyColor-full: hsl(0, 0%, 0%, 100%); --bodyColor-light: hsl(0, 0%, 0%, 54%); --bodyColor-lighter: hsl(0, 0%, 0%, 14%);  
+  --mainColor: hsl(228, 32%, 9%, 100%); --mainColor-lighter: hsl(5, 80%, 65%, 100%); --altColor: hsl(5, 72%, 60%, 100%);
+  --bodyColor-full: hsl(0, 0%, 0%, 100%); --bodyColor-light: hsl(255, 100%, 100%, 54%); --bodyColor-lighter: hsl(255, 100%, 100%, 8%);  
+  --statusPositiveColor: hsl(130, 99%, 58%, 100%); --statusNegativeColor: hsl(20, 100%, 50%, 100%); 
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap');
-
-/* --------------------------------------------- Reset --------------------------------------------- */
 
 *, *::before, *::after {
   box-sizing: border-box; border: none;
@@ -28,9 +28,7 @@ ul[class], ol[class] {
 
 body, h1, h2, h3, h4, h5, h6, p, ul[class], ol[class], li, figure, figcaption, blockquote, dl, dd { margin: 0; }
 
-img{
-  max-width: 100%; display: block;
-}
+img{ max-width: 100%; display: block; }
 
 /*
 
@@ -63,6 +61,9 @@ body{
   background-color: var(--mainColor); color: white;
 }
 
+body::-webkit-scrollbar { width: 8px }
+body::-webkit-scrollbar-thumb { background: var(--bodyColor-lighter) }
+
 header{
   position: fixed;  top: 0; left: 0;
   width: 100%;  
@@ -83,10 +84,11 @@ footer{
   position: fixed; bottom: 0; left: 0;
   width: 100%;
   background-color: var(--mainColor);
+  padding-top: 16px;
 }
 
 footer nav{
-  margin: 0 32px 24px; border: 1px solid var(--bodyColor-lighter); border-radius: 4px; padding: 16px 24px;
+  box-shadow: var(--shadowPlus); margin: 0 32px 24px; border: 0px solid var(--bodyColor-lighter); border-radius: 4px; padding: 16px 24px;
   background-color: var(--bodyColor-lighter);
 }
 
@@ -154,6 +156,10 @@ label{
   font-weight: 700; font-size: 12px; line-height: 18px; color: white;
 }
 
+.positive{ color: var(--statusPositiveColor) }
+.negative{ color: var(--statusNegativeColor) }
+
+
 /* ---------------------------- Input Elements ---------------------------- */
 
 input, textarea, select{
@@ -177,10 +183,6 @@ button{
 
   button:hover{ opacity: 0.85; } 
 
-  button.main{ background-color: var(--mainColor); }
-
-  button.alt{ background-color: var(--altColor); }
-
   button.icon{
     display: grid; align-items: center; justify-content: center;
     margin: 0 auto; border: solid 1px var(--bodyColor-lighter); border-radius: 4px; padding: 0; width: 24px; height: 24px;
@@ -193,26 +195,9 @@ button{
     }
 
     button.icon:hover{
-      background-color: var(--bodyColor-light);
-      
+      background-color: var(--bodyColor-light);      
       transition: var(--animation-time);
     }
-
-  button.fab{
-    display: grid; align-content: center; justify-content: center;
-    position: fixed; bottom: 35px; right: 35px; 
-    margin-bottom: 0; box-shadow: var(--shadow); border-radius: 56px; width: 56px; height: 56px; 
-    background-color: white;
-    color: var(--bodyColor-full);
-  }
-      
-    button.fab:hover{ filter: brightness(0.93); } 
-
-  .buttonArray{
-    display: grid; grid-auto-flow: column; column-gap: 6px; justify-content: end; opacity: 0;
-    
-    transition: var(--animation-time);
-  }
 
 .fieldGroup{
   text-align: left;
@@ -220,76 +205,56 @@ button{
 
 /* ---------------------------- Custom Elements ---------------------------- */ 
 
-.logo{
-  width: 35px; height: 24px;
-  margin-bottom: 8px;
-}
-
-.logo path { fill: var(--mainColor) }
-
-body.red .logo path { fill: white }
-
-.dashboard .logo{
-  width: 47px; height: 32px;
-  margin-bottom: 0;
-}
-
-
 .card{
-  margin-bottom: 16px; border: 1px solid var(--bodyColor-lighter); border-radius: 4px; padding: 16px 24px;
+  display: grid; grid-auto-flow: row; row-gap: 16px;
+  box-shadow: var(--shadow) ;margin-bottom: 16px; border: 0px solid var(--bodyColor-lighter); border-radius: 4px; padding: 16px 24px;
   background-color: var(--bodyColor-lighter);
   text-align: left; overflow-wrap: break-word; color: white; 
 }
-  .card .header{
-    display: grid; grid-auto-flow: column; grid-template-columns: auto auto;
-    margin-bottom: 16px;
-  }
 
-  .card .header div {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 128px 72px 64px;
-    align-items: center;
-    justify-content: space-between;
-  }
+	.card > div:first-child{
+		display: grid; grid-auto-flow: column; grid-template-columns: auto auto;
+	}
 
-  .card.inline .header {
-    margin-bottom: 0;
-  }
+	.card > div:first-child div {
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-columns: 160px 72px 64px;
+		align-items: center;
+		justify-content: space-between;
+	}
 
-  .card .header p, .card .header h4{
-    margin-bottom: 0;
-  }
+	.card > div:first-child *{
+		margin-bottom: 0;
+	}
 
-  .card:hover .buttonArray {
-    opacity: 1.0;    
-    transition: var(--animation-time);
-  }
+	.card > div:first-child nav {
+		display: grid; grid-auto-flow: column; column-gap: 6px; justify-content: end; opacity: 0;    
+		transition: var(--animation-time);
+	}
 
-  .card.dialog{
-    text-align: center;
-  }
+	.card:hover > div:first-child nav {
+		opacity: 1.0;    
+		transition: var(--animation-time);
+	}
 
-  .card.account {
-    margin-bottom: 16px; padding: 16px;
-    text-align: left;
-  }
+	.card.dialog{
+		text-align: center;
+	}
 
-  .card.account :nth-child(4) {
-    display: grid; grid-template-columns: 1fr 1fr;
-  }
+	.card.account {
+		margin-bottom: 16px; padding: 16px;
+		text-align: left;
+	}
 
-  .card.account :nth-child(4) :nth-child(2) {
-    justify-self: right;
-  }
-  
-  .card.account :nth-child(4) > h4 {
-    margin-bottom: 0;
-  }
+		.card.account :nth-child(4) {
+		display: grid; grid-template-columns: 1fr 1fr;
+		}
 
-
-.tile{
-  margin-bottom: 8px; border: solid 1px var(--bodyColor-lighter); border-radius: 4px; padding: 16px;
-  background-color: var(--bodyColor-lighter);
-  text-align: left;
-}
+		.card.account :nth-child(4) :nth-child(2) {
+		justify-self: right;
+		}
+		
+		.card.account :nth-child(4) > h4 {
+		margin-bottom: 0;
+		}

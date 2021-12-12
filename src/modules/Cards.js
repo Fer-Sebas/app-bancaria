@@ -1,9 +1,12 @@
 import Divider from './Divider'
+import React from 'react'
+import { IconCheck, IconDelete } from './Icons'
+import { ButtonIcon } from './Buttons'
+import axios from 'axios'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0,})
-const formatAccountNumber = (n) => { 
-    return n.toString().match(/.{1,3}/g).join(' ')
-}
+const formatAccountNumber = (n) => { return n.toString().match(/.{1,2}/g).join(' ') }
+
 
 function Card(props) {
     return (
@@ -48,4 +51,39 @@ const DialogCard = (props) => {
     ) 
 }
 
-export {Card, AccountCard, DialogCard}
+
+class RequestCard extends React.Component {
+
+    handleAproveRequest() {
+        axios.post(`http://localhost:5000/accounts/`, { number: this.props.number, status: 'ACTIVE' })
+        console.log( 'Solicitud Aprovada: ' + this.props.number )
+    }
+
+    handleDeleteRequest() {
+        axios.post(`http://localhost:5000/accounts/`, { number: this.props.number, status: 'DELETED' })
+        console.log( 'Solicitud Eliminada: ' + this.props.number )
+    }
+
+    render() { 
+        return (
+            <div className='card'>
+                <div>
+                    <div>
+                        <h4>{this.props.owner}</h4>
+                        <p>{formatAccountNumber(this.props.number)}</p>
+                    </div>
+                    <nav>
+                        <ButtonIcon handle={() => this.handleAproveRequest()}>
+                            <IconCheck/>
+                        </ButtonIcon>
+                        <ButtonIcon handle={() => this.handleDeleteRequest()}>
+                            <IconDelete/>
+                        </ButtonIcon>
+                    </nav>
+                </div>
+            </div>
+        )
+    }
+}
+
+export {Card, AccountCard, DialogCard, RequestCard }

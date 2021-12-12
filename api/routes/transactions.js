@@ -1,10 +1,9 @@
 // Importar dependencias
-const router = require('express').Router();
-let Transaction = require('../models/transaction.model');
-let User = require('../models/users.model');
+const router = require('express').Router()
+let Transaction = require('../models/transaction.model')
+let User = require('../models/users.model')
 
-router.get('/', async (req, res) => {
-    const transactions = await Transaction.find({}).sort({date: -1});
+router.route('/:id').get( getUserTransactions, (req, res) => {
     res.send(transactions);
 })
 
@@ -43,5 +42,14 @@ router.post('/', async (req, res) => {
         res.status(500).send('Server Error');
     }
 })
+
+async function getUserTransactions (req, res, next) {
+    try{
+        transactions = await Transaction.find({$or: [{ "from.id": req.params.id }, { "to.id": req.params.id }]})
+        if (transactions == null) { return res.status(404).json('Cannot find transactions') }
+    } catch (err) { return res.status(500).json('Server error') }
+    res.transactions = transactions
+    next()
+}
 
 module.exports = router;

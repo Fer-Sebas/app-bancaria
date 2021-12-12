@@ -1,6 +1,7 @@
-import { Card, AccountCard } from "./Cards"
+import { Card, AccountCard, RequestCard, DialogCard } from "./Cards"
+import TransactionCard from "./cards/TransactionCard"
 import { Button, ButtonIcon } from './Buttons'
-import { IconCheck, IconDelete, IconCancel, IconPencil } from './Icons'
+import { IconCheck, IconCancel, IconPencil } from './Icons'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -28,17 +29,17 @@ const products = [
     {id: 2, username: 'Pablo Perez', docNumber: 9874043312, accountNumber: 111111112, accountStatus: 'Cancelada', timestamp: '30 Nov 2021'}
 ]
 
-function AccountList ({userData}) {
+function AccountList ({user}) {
 
     function handleRequestAccount () { 
-        axios.post(`http://localhost:5000/users/${userData._id}/accounts`)
+        axios.post(`http://localhost:5000/users/${user._id}/accounts`)
         console.log('Cuenta Solicitada') 
     }
     
     const [userAccounts, setUserAccounts] = useState('')
     
     const fetchUserAccounts = async () => {
-        return axios.get(`http://localhost:5000/users/${userData._id}/accounts`)
+        return axios.get(`http://localhost:5000/users/${user._id}/accounts`)
         .then(({data}) => { return data }).catch(err => { console.error(err) })
     }
 
@@ -125,52 +126,53 @@ function ProductList () {
 
 }
 
-
 function RequestList () {
 
-    function handleDeleteRequest (request) { console.log('Solicitud Eliminada: ' + request.username) }
-    function handleAproveRequest (request) { console.log('Solicitud Aprovada: ' + request.username ) }
+    const [requestList, setRequestList] = useState([])
+    const fetchAccountRequests = async () => {
+        return axios.get(`http://localhost:5000/accounts`)
+        .then(({data}) => { return data }).catch(err => { console.error(err) })
+    }
 
-    return (
-        products.map(request => {
-            return (
-                <Card className="inline" key={request.id}> 
-                    <div className="header">
-                        <div>
-                            <h4>{request.username}</h4>
-                            <p>{request.docNumber}</p>
-                            <p>{request.timestamp}</p>
-                        </div>
-                        <nav className="buttonArray">
-                            <ButtonIcon handle={() => handleAproveRequest(request)}>
-                                <IconCheck/>
-                            </ButtonIcon>
-                            <ButtonIcon handle={() => handleDeleteRequest(request)}>
-                                <IconDelete/>
-                            </ButtonIcon>
-                        </nav>
-                    </div>
-                </Card>
-            )
-        })
-    )
-}
+    useEffect(() => { fetchAccountRequests().then(requestList => { setRequestList(requestList) }) }, [])
 
+    const filter = requestList.filter( request => request.status === 'PENDING')
 
-function MovementList ({accounts}) {
-    
-    if (accounts?.movements) {
-        return(
-            <>
-            hi
-            </>
+    if (filter.length > 0) {
+        return (
+            filter.map ( result => { return <RequestCard key={result._id} number={result.number} owner={result.owner.name} /> })
         )
     }
+
     else {
         return (
-            <Card title="Aun no haz hecho ninguna transacción" body="Tus transacciones apareceran aqui." />
+            <DialogCard title="No hay solicitudes pendientes" body="Las solicitudes de cuentas apareceran aqui." />
         )
+    }    
+
+}
+
+function MovementList ({user}) {
+    
+    const [transactions, setTransactions] = useState([])
+    
+    const fetchUserTransactions = async () => {
+        return axios.get(`http://localhost:5000/transactions/${user._id}`)
+        .then(({data}) => { return data }).catch(err => { console.error(err) })
     }
+
+    useEffect(() => { fetchUserTransactions().then(transactions => { setTransactions(transactions) }) }, [])
+
+    return (
+        <>
+        { transactions.length === 0 && <Card title="Aun no haz hecho ninguna transacción" body="Tus transacciones apareceran aqui." /> } 
+        { transactions.length > 0 && 
+            transactions.map ( transaction => { 
+                return <TransactionCard key={transaction._id} date={transaction.date} from={transaction.from} to={transaction.to} amount={transaction.amount} userId={user._id} />  
+            })
+        }
+        </>
+    )
 }
 
 export { AccountList, ComplaintList, ProductList, RequestList, MovementList }

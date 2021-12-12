@@ -3,6 +3,7 @@ const router = require('express').Router()
 const ObjectID = require("bson-objectid");
 let User = require('../models/users.model')
 let Account = require('../models/account.model')
+let Counter = require('../models/counters.model')
 
 // GET - Ver usuarios
 router.route('/').get( async (req, res) => { User.find().then(users => res.json(users)).catch(err => res.status(500).json('Error: ' + err)); });
@@ -10,7 +11,6 @@ router.route('/').get( async (req, res) => { User.find().then(users => res.json(
 // POST - Añadir usuarios
 router.route('/').post((req,res) => {
 
-    // Recolección de datos
     const username = req.body.username
     const birthDate = req.body.birthDate
     const email = req.body.email;
@@ -23,11 +23,9 @@ router.route('/').post((req,res) => {
     const userType = 1;
     const password = req.body.password;
 
-    // Instanciación de objeto
     const newUser = new User( { username, birthDate, email, address, idDoc, userType, password } );
-
-    // Guardar objeto en DB
     newUser.save().then(() => res.status(201).json('User added!')).catch(err => res.status(500).json('Error: ' + err));
+
 });
 
 // GET - Ver usuario
@@ -37,10 +35,13 @@ router.route('/:id').get( getUser, (req, res) => { res.send(user) } );
 router.route('/:id/accounts').get( getUser, getUserAccounts, (req,res) => { res.send(accounts) })
 
 // POST - Añadir cuenta
-router.route('/:id/accounts').post( getUser, (req,res) => {
+router.route('/:id/accounts').post( getUser, getAccountSerial, (req,res) => {
 
-    const number = 1
-    const owner = req.params.id
+    const number = accountSerial.number + 1
+    const owner = {
+       name: user.username.first + ' ' + user.username.last,
+       id: user._id
+    }
     const _id = ObjectID()
 
     // Instanciación de objeto
@@ -49,10 +50,16 @@ router.route('/:id/accounts').post( getUser, (req,res) => {
 
     // Crear referencia en documento de usuario
     user.accounts.push(accountRef)
-    user.save().then(() => res.status(201).json('Account reference added!')).catch(err => res.status(500).json('Error: ' + err));
+    user.save()
+    .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
+
+    // Incrementar contador
+    Counter.findOneAndUpdate({title: "accounts"}, {number: number})
+    .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
 
     // Guardar cuenta en colección
-    newAccount.save().then(() => res.status(201).json('Account requested!')).catch(err => res.status(500).json('Error: ' + err));
+    newAccount.save()
+    .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
 
 });
 
@@ -67,11 +74,21 @@ async function getUser (req, res, next) {
 
 async function getUserAccounts (req, res, next) {
     try{
-        accounts = await Account.find({ owner: req.params.id })
+        accounts = await Account.find({ "owner.id": req.params.id })
         if (accounts == null) { return res.status(404).json('Cannot find accounts') }
     } catch (err) { return res.status(500).json('Server error') }
     res.accounts = accounts
     next()
 }
+
+async function getAccountSerial (req, res, next) {
+    try{ 
+        accountSerial = await Counter.findOne({ title: 'accounts' })
+    }
+    catch (err) { return res.status(500).json('Server error !!!') }
+    res.accountSerial = accountSerial
+    next()
+}
+
 
 module.exports = router;
