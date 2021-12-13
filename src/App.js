@@ -5,6 +5,7 @@ import ComplaintList from './modules/lists/ComplaintList'
 import ProductList from './modules/lists/ProductList'
 import AccountList from './modules/lists/AccountList'
 import SendMoneyForm from './modules/SendMoney.Form'
+import AddMoneyForm from './modules/AddMoneyForm'
 import Footer from './modules/Footer'
 import SignIn from './modules/SignIn'
 import SignUp from './modules/SignUp'
@@ -12,7 +13,7 @@ import { ButtonNavbar } from './modules/Buttons'
 import axios from 'axios'
 import { DialogCard } from './modules/Cards'
 
-const userId = 3
+const userId = 4
 
 class App extends React.Component {
   
@@ -56,7 +57,7 @@ class App extends React.Component {
             <>
               {this.state.view === 1 &&
                 <DialogCard title="Consignar dinero" body="Indicanos el numero de cuenta y el monto que deseas consignar." >
-                  <SendMoneyForm />
+                  <AddMoneyForm />
                 </DialogCard>
               }
               {this.state.view === 2 && <RequestList /> }
@@ -74,7 +75,7 @@ class App extends React.Component {
             <>
               {this.state.view === 1 &&
                 <DialogCard title="Consignar dinero"  body="Indicanos el numero de cuenta y el monto que deseas consignar." >
-                  <SendMoneyForm />
+                  <AddMoneyForm />
                 </DialogCard>
               }
               {this.state.view === 2 && <RequestList /> }

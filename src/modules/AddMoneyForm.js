@@ -6,20 +6,18 @@ class SendMoneyForm extends React.Component {
   constructor (props) {
     super (props)
 
-    this.onChangeSender = this.onChangeSender.bind(this)
     this.onChangeTarget = this.onChangeTarget.bind(this)
     this.onChangeAmount = this.onChangeAmount.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
 
-    this.state = {
-      senderAccountNumber: '',
+    this.state = {        
+      senderAccountNumber: 10000000,
       targetAccountNumber: '',
-      moneyAmmount: 100
+      moneyAmmount: 0
     }
 
   }
 
-  onChangeSender (e) { this.setState({ senderAccountNumber: e.target.value }) }
   onChangeTarget (e) { this.setState({ targetAccountNumber: e.target.value }) }
   onChangeAmount (e) { this.setState({ moneyAmmount: e.target.value }) }
 
@@ -37,20 +35,15 @@ class SendMoneyForm extends React.Component {
     .post('http://localhost:5000/transactions', transaction).then(({data}) => { console.log(data) }).catch(err => { console.error(err) })
 
     this.setState ({
-      senderAccountNumber: 0,
       targetAccountNumber: 0,
-      moneyAmmount: 100
+      moneyAmmount: 0
     })
 
   }
 
   render() { 
     return (
-      <form name="SendMoneyForm" id="SendMoneyForm" onSubmit={this.onSubmit}>
-        <div className="fieldGroup">
-          <label htmlFor="senderAccountNumber">El dinero saldrá de:</label>
-          <input type="number" title="senderAccountNumber" min="10000000" value={this.state.senderAccountNumber} onChange={this.onChangeSender} />
-        </div>  
+      <form name="AddMoneyForm" id="AddMoneyForm" onSubmit={this.onSubmit}>
         <div className="fieldGroup">
           <label htmlFor="targetAccountNumber">El dinero se enviará a:</label>
           <input type="number" title="targetAccountNumber" min="10000000" value={this.state.targetAccountNumber} onChange={this.onChangeTarget} />

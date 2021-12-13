@@ -1,11 +1,21 @@
+import React from 'react'
 
-function SignInForm() {
+class SignInForm extends React.Component {
 
+  constructor (props) {
+    super (props)
+
+    this.state = {
+      
+    }
+  }
+
+  render() {
     return (
       <form name="SignInForm" id="SignInForm">
           
           <div className="fieldGroup">
-            <label htmlFor="phoneNumber">Numero Telefónico</label>
+            <label htmlFor="phoneNumber">Email</label>
             <input type="number" title="phoneNumber" />
           </div>
   
@@ -20,7 +30,8 @@ function SignInForm() {
           
       </form>
     );
-  
   }
-  
-  export default SignInForm;
+
+}
+
+export default SignInForm;

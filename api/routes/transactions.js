@@ -1,7 +1,8 @@
 // Importar dependencias
 const router = require('express').Router()
 let Transaction = require('../models/transaction.model')
-let User = require('../models/users.model')
+let Account = require('../models/account.model')
+
 
 router.route('/complaints').get( getUserComplaints, (req, res) => {
     res.send(complaints);
@@ -11,43 +12,44 @@ router.route('/:id').get( getUserTransactions, (req, res) => {
     res.send(transactions);
 })
 
+router.route('/').post( checkSenderAccount, checkTargetAccount, (req, res) => {
 
-router.post('/', async (req, res) => {
-    const { from, to , amount } = req.body;
-    try {
-        const fromUser = await User.findById(from);
-        const newFromBalance = Number(fromUser.balance) - Number(amount);
-        User.updateOne({ _id: from }, { balance: newFromBalance }, err => {
-            if (err) {
-                console.log(err);
-                res.status(500).send('Server Error');
-            } else {
-                console.log('Updated');
-            }
-        })
-        const toUser = await CustomElementRegistry.findById(to);
-        const newToBalance = Number(toUser.balance) + Number(amount);
-        User.updateOne({ _id: to }, { balance: newToBalance }, err => {
-            if (err) {
-                console.log(err);
-                res.status(500).send('Server Error');
-            } else {
-                console.log('Updated');
-            }
-        })
-        const transaction = new Transaction({
-            from: fromUser,
-            to: toUser,
-            amount,
-        })
-        transaction.save();
-        res.json(transaction);
-    } catch (error) {
-        console.log(error)
-        res.status(500).send('Server Error');
+    const amount = parseInt(req.body.amount)
+    const total = amount + (amount * 1 / 100)
+    const senderNewBalance = parseInt(senderAccount.balance) - parseInt(total)
+    const targetNewBalance = parseInt(targetAccount.balance) + parseInt(amount)
+
+    if (req.body.from === 10000000) {
+
+        // Increase target account balance
+        Account.findOneAndUpdate({number: targetAccount.number}, {balance: targetNewBalance})
+        .then(res.status(200).json('Funds added')).catch(err => res.status(500).json('Error: ' + err));
+
     }
-})
 
+    else {
+
+        // Check if sender balances is enough after tax
+        if (senderAccount.balance > total) {
+
+            // Reduce sender account balance
+            Account.findOneAndUpdate({number: senderAccount.number}, {balance: senderNewBalance})
+            .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
+
+            // Increase target account balance
+            Account.findOneAndUpdate({number: targetAccount.number}, {balance: targetNewBalance})
+            .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
+            
+        }
+
+        else {
+            res.send(`No Money`)
+        }
+
+    }
+
+    
+})
 
 async function getUserTransactions (req, res, next) {
     try{
@@ -64,6 +66,24 @@ async function getUserComplaints (req, res, next) {
         if (complaints == null) { return res.status(404).json('Cannot find complaints') }
     } catch (err) { return res.status(500).json('Server error') }
     res.complaints = complaints
+    next()
+}
+
+async function checkSenderAccount (req, res, next) {
+    try{
+        senderAccount = await Account.findOne({ number: req.body.from })
+        if (senderAccount == null) { return res.status(404).json('Cannot find sender account') }
+    } catch (err) { return res.status(500).json('Server error') }
+    res.senderAccount = {senderAccount}
+    next()
+}
+
+async function checkTargetAccount (req, res, next) {
+    try{
+        targetAccount = await Account.findOne({ number: req.body.to })
+        if (targetAccount == null) { return res.status(404).json('Cannot find accounts') }
+    } catch (err) { return res.status(500).json('Server error') }
+    res.targetAccount = {targetAccount}
     next()
 }
 
