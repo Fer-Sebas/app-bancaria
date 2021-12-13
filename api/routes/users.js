@@ -44,22 +44,19 @@ router.route('/:id/accounts').post( getUser, getAccountSerial, (req,res) => {
     }
     const _id = ObjectID()
 
-    // Instanciación de objeto
     const newAccount = new Account( { _id, number, owner, } )
-    const accountRef = { _id }
-
-    // Crear referencia en documento de usuario
-    user.accounts.push(accountRef)
-    user.save()
-    .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
 
     // Incrementar contador
-    Counter.findOneAndUpdate({title: "accounts"}, {number: number})
-    .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
+    Counter.findOneAndUpdate( { title: "accounts" } , { number: number })
+    .then(res.status(200).json('Counter Incremented')).catch(err => res.status(500).json('Error: ' + err))      
 
     // Guardar cuenta en colección
     newAccount.save()
-    .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
+    .then(res.status(200).json('Account Saved')).catch(err => res.status(500).json('Error: ' + err))
+
+    // Crear referencia en documento de usuario
+    User.findOneAndUpdate( { _id: user._id }, { $push: { accounts: { number } } } )
+    .then(res.status(200).json('Reference Added')).catch(err => res.status(500).json('Error: ' + err))
 
 });
 

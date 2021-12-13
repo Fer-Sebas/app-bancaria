@@ -3,9 +3,14 @@ const router = require('express').Router()
 let Transaction = require('../models/transaction.model')
 let User = require('../models/users.model')
 
+router.route('/complaints').get( getUserComplaints, (req, res) => {
+    res.send(complaints);
+})
+
 router.route('/:id').get( getUserTransactions, (req, res) => {
     res.send(transactions);
 })
+
 
 router.post('/', async (req, res) => {
     const { from, to , amount } = req.body;
@@ -43,12 +48,22 @@ router.post('/', async (req, res) => {
     }
 })
 
+
 async function getUserTransactions (req, res, next) {
     try{
         transactions = await Transaction.find({$or: [{ "from.id": req.params.id }, { "to.id": req.params.id }]})
         if (transactions == null) { return res.status(404).json('Cannot find transactions') }
     } catch (err) { return res.status(500).json('Server error') }
     res.transactions = transactions
+    next()
+}
+
+async function getUserComplaints (req, res, next) {
+    try{
+        complaints = await Transaction.find({ "complaint.hasComplaint": true })
+        if (complaints == null) { return res.status(404).json('Cannot find complaints') }
+    } catch (err) { return res.status(500).json('Server error') }
+    res.complaints = complaints
     next()
 }
 

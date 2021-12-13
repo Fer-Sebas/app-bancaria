@@ -219,7 +219,7 @@ button{
 	.card > div:first-child div {
 		display: grid;
 		grid-auto-flow: column;
-		grid-template-columns: 160px 72px 64px;
+		grid-template-columns: 160px 160px 64px;
 		align-items: center;
 		justify-content: space-between;
 	}

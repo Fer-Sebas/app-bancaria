@@ -2,10 +2,8 @@ import React from 'react'
 import dateFormat from "dateformat"
 import { ButtonIcon } from '../Buttons'
 import { IconAlert } from '../Icons'
-
+import { formatAccountNumber, currencyFormatter } from '../helpers'
 const format = 'dd mmm yyyy hh:MM TT'
-const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0,})
-const formatAccountNumber = (n) => { return n.toString().match(/.{1,2}/g).join(' ') }
 
 class TransactionCard extends React.Component {
     render() {
