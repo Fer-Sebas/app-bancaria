@@ -13,7 +13,7 @@ import { ButtonNavbar } from './modules/Buttons'
 import axios from 'axios'
 import { DialogCard } from './modules/Cards'
 
-const userId = 4
+const userId = 2
 
 class App extends React.Component {
   

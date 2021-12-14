@@ -25,6 +25,8 @@ router.route('/').post( checkSenderAccount, checkTargetAccount, (req, res) => {
         Account.findOneAndUpdate({number: targetAccount.number}, {balance: targetNewBalance})
         .then(res.status(200).json('Funds added')).catch(err => res.status(500).json('Error: ' + err));
 
+        // TO DO: Instantiate and push new transaction
+
     }
 
     else {
@@ -39,7 +41,9 @@ router.route('/').post( checkSenderAccount, checkTargetAccount, (req, res) => {
             // Increase target account balance
             Account.findOneAndUpdate({number: targetAccount.number}, {balance: targetNewBalance})
             .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
-            
+
+            // TO DO: Instantiate and push new transaction
+
         }
 
         else {

@@ -2,6 +2,8 @@ import React from 'react'
 import Divider from '../Divider';
 import { formatAccountNumber, currencyFormatter } from '../helpers';
 
+// TO DO: Add cancel button
+
 class AccountCard extends React.Component {
     render() { 
         return (
