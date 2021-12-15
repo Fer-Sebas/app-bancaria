@@ -4,8 +4,7 @@ let Account = require('../models/account.model')
 
 // Ver cuentas
 router.route('/').get( async (req, res) => {
-    Account.find().then(accounts => res.json(accounts)).catch(err => res.status(500).json('Error: ' + err));
-    // TO DO: Only show active accounts
+    Account.find().then(accounts => res.json(accounts)).catch(err => res.status(500).json('Error: ' + err));E
 });
 
 // Ver reclamos
