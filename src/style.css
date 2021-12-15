@@ -11,7 +11,8 @@
   --shadowPlus: 0px 22px 70px 4px rgba(0, 0, 0, 0.56);
   
   --mainColor: hsl(228, 32%, 9%, 100%); --mainColor-lighter: hsl(5, 80%, 65%, 100%); --altColor: hsl(5, 72%, 60%, 100%);
-  --bodyColor-full: hsl(0, 0%, 0%, 100%); --bodyColor-light: hsl(255, 100%, 100%, 54%); --bodyColor-lighter: hsl(255, 100%, 100%, 8%);  
+  --bodyColor-full: hsl(0, 0%, 0%, 100%); --bodyColor-light: hsl(255, 100%, 100%, 4%); --bodyColor-lighter: hsl(255, 100%, 100%, 8%);  
+  --bodyColor-lightest: hsl(255, 100%, 100%, 32%);
   --statusPositiveColor: hsl(130, 99%, 58%, 100%); --statusNegativeColor: hsl(20, 100%, 50%, 100%); 
 }
 
@@ -144,7 +145,7 @@ a{
 
 p{
   margin-bottom: 8px;
-  font-weight: 500; font-size: 12px; line-height: 18px;
+  font-weight: 500; font-size: 13px; line-height: 18px;
 }
 
   p.altText{
@@ -153,7 +154,7 @@ p{
 
 label{
   margin-bottom: 8px;
-  font-weight: 700; font-size: 12px; line-height: 18px; color: white;
+  font-weight: 700; font-size: 13px; line-height: 18px; color: white;
 }
 
 .positive{ color: var(--statusPositiveColor) }
@@ -168,6 +169,11 @@ input, textarea, select{
   margin: 4px 0 16px 0; border: 1px solid var(--bodyColor-lighter); width: 100%; border-radius: 4px; padding: 4px 8px; outline-color: var(--bodyColor-lighter);
   background: var(--bodyColor-lighter);
   font-weight: 800; font-size: 12px; font-weight: 500; font-size: 12px; line-height: 18px; font-family: inherit; color: white;
+}
+
+select option {
+  background-color: #343640;
+  color: white;
 }
 
 input[type=password]{ letter-spacing: 0.3em; }
@@ -212,6 +218,11 @@ button{
   text-align: left; overflow-wrap: break-word; color: white; 
 }
 
+  .card.locked {
+    background-color: var(--bodyColor-light);
+    color: var(--bodyColor-lightest) ;
+  }
+
 	.card > div:first-child{
 		display: grid; grid-auto-flow: column; grid-template-columns: auto auto;
 	}
@@ -233,10 +244,19 @@ button{
 		transition: var(--animation-time);
 	}
 
+  .card.locked:hover > div:first-child nav {
+    opacity: 0;    
+	}
+
+  .card.canceled:hover > div:first-child nav {
+    opacity: 0;    
+	}
+
 	.card:hover > div:first-child nav {
 		opacity: 1.0;    
 		transition: var(--animation-time);
 	}
+
 
 	.card.dialog{
 		text-align: center;

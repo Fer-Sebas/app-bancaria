@@ -12,7 +12,7 @@ class SendMoneyForm extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
 
     this.state = {
-      senderAccountNumber: '',
+      senderAccountNumber: undefined,
       targetAccountNumber: '',
       moneyAmmount: 100
     }
@@ -33,11 +33,12 @@ class SendMoneyForm extends React.Component {
       amount: this.state.moneyAmmount
     }
 
-    axios
-    .post('http://localhost:5000/transactions', transaction).then(({data}) => { console.log(data) }).catch(err => { console.error(err) })
+    console.log(transaction)
+
+    // axios
+    // .post('http://localhost:5000/transactions', transaction).then(({data}) => { console.log(data) }).catch(err => { console.error(err) })
 
     this.setState ({
-      senderAccountNumber: 0,
       targetAccountNumber: 0,
       moneyAmmount: 100
     })
@@ -45,11 +46,19 @@ class SendMoneyForm extends React.Component {
   }
 
   render() { 
+
+
+
     return (
       <form name="SendMoneyForm" id="SendMoneyForm" onSubmit={this.onSubmit}>
+        
         <div className="fieldGroup">
           <label htmlFor="senderAccountNumber">El dinero saldrá de:</label>
-          <input type="number" title="senderAccountNumber" min="10000000" value={this.state.senderAccountNumber} onChange={this.onChangeSender} />
+          <select title="senderAccountNumber" value={this.state.senderAccountNumber} onChange={this.onChangeSender}>
+            {this.props.accounts.map(account =>
+              <option key={account.number} value={account.number}>{account.number}</option>
+            )};
+          </select>
         </div>  
         <div className="fieldGroup">
           <label htmlFor="targetAccountNumber">El dinero se enviará a:</label>

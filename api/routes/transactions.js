@@ -3,7 +3,6 @@ const router = require('express').Router()
 let Transaction = require('../models/transaction.model')
 let Account = require('../models/account.model')
 
-
 router.route('/complaints').get( getUserComplaints, (req, res) => {
     res.send(complaints);
 })
@@ -19,13 +18,26 @@ router.route('/').post( checkSenderAccount, checkTargetAccount, (req, res) => {
     const senderNewBalance = parseInt(senderAccount.balance) - parseInt(total)
     const targetNewBalance = parseInt(targetAccount.balance) + parseInt(amount)
 
+    const from ={ 
+        accountOwner: senderAccount.owner.name,
+        accountNumber: senderAccount.number,
+        id: senderAccount.owner.id
+    }
+    const to ={ 
+        accountOwner: targetAccount.owner.name,
+        accountNumber: targetAccount.number,
+        id: targetAccount.owner.id
+    }
+
     if (req.body.from === 10000000) {
 
         // Increase target account balance
         Account.findOneAndUpdate({number: targetAccount.number}, {balance: targetNewBalance})
         .then(res.status(200).json('Funds added')).catch(err => res.status(500).json('Error: ' + err));
 
-        // TO DO: Instantiate and push new transaction
+        // Instantiate and push new transaction        
+        const newTransaction = new Transaction( { from, to, amount } );
+        newTransaction.save().then(() => res.status(201).json('Transaction Created')).catch(err => res.status(500).json('Error: ' + err));
 
     }
 
@@ -42,7 +54,9 @@ router.route('/').post( checkSenderAccount, checkTargetAccount, (req, res) => {
             Account.findOneAndUpdate({number: targetAccount.number}, {balance: targetNewBalance})
             .then(res.status(200)).catch(err => res.status(500).json('Error: ' + err));
 
-            // TO DO: Instantiate and push new transaction
+            // Instantiate and push new transaction
+            const newTransaction = new Transaction( { from, to, amount } );
+            newTransaction.save().then(() => res.status(201).json('Transaction Created')).catch(err => res.status(500).json('Error: ' + err));
 
         }
 

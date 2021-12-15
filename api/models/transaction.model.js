@@ -6,11 +6,13 @@ const Schema = mongoose.Schema;
 const transactionScheme = new Schema ({
     from:{ 
        accountOwner: { type: String, required: true },
-       accountNumber: { type: Number, required: true }
+       accountNumber: { type: Number, required: true },
+       id: { type: Number, required: true }
     },
     to:{ 
         accountOwner: { type: String, required: true },
-        accountNumber: { type: Number, required: true }
+        accountNumber: { type: Number, required: true },
+       id: { type: Number, required: true }
     },
     amount: { type: Number, required: true },
     date: { type: Date, default: Date.now() },

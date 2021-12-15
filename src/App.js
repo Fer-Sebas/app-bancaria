@@ -13,7 +13,7 @@ import { ButtonNavbar } from './modules/Buttons'
 import axios from 'axios'
 import { DialogCard } from './modules/Cards'
 
-const userId = 2
+const userId = 4
 
 class App extends React.Component {
   
@@ -43,7 +43,7 @@ class App extends React.Component {
               {this.state.view === 1 && <AccountList user={this.state.user} /> }
               {this.state.view === 2 && <MovementList user={this.state.user} /> }
               {this.state.view === 3 && <DialogCard title="Envia dinero a otra cuenta" body="Indicanos el numero de cuenta y el monto que deseas enviar." altText="El costo de la transacción es del 1%" >
-                <SendMoneyForm />
+                <SendMoneyForm accounts={this.state.user.accounts} />
               </DialogCard>
               }
               <Footer>          

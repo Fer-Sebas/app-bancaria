@@ -50,11 +50,11 @@ router.route('/:id/accounts').post( getUser, getAccountSerial, (req,res) => {
     Counter.findOneAndUpdate( { title: "accounts" } , { number: number })
     .then(res.status(200).json('Counter Incremented')).catch(err => res.status(500).json('Error: ' + err))      
 
-    // Guardar cuenta en colección
-    newAccount.save()
-    .then(res.status(200).json('Account Saved')).catch(err => res.status(500).json('Error: ' + err))
+    // // Guardar cuenta en colección
+    // newAccount.save()
+    // .then(res.status(200).json('Account Saved')).catch(err => res.status(500).json('Error: ' + err))
 
-    // Crear referencia en documento de usuario
+    // // Crear referencia en documento de usuario
     User.findOneAndUpdate( { _id: user._id }, { $push: { accounts: { number } } } )
     .then(res.status(200).json('Reference Added')).catch(err => res.status(500).json('Error: ' + err))
 
